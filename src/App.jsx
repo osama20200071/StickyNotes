@@ -3,11 +3,9 @@ import NotesPage from "./pages/NotesPage";
 
 function App() {
   return (
-    <main id="app">
-      <NotesContext>
-        <NotesPage />
-      </NotesContext>
-    </main>
+    <NotesContext>
+      <NotesPage />
+    </NotesContext>
   );
 }
 

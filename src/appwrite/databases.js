@@ -5,12 +5,13 @@ const db = {};
 
 collections.forEach((collection) => {
   db[collection.name] = {
-    create: async (payload, id = ID.unique()) => {
+    create: async (payload, permissions, id = ID.unique()) => {
       return await databases.createDocument(
         collection.dbId,
         collection.id,
         id,
-        payload
+        payload,
+        permissions
       );
     },
     update: async (payload, id) => {

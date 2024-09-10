@@ -3,11 +3,14 @@ import Plus from "../Icons/Plus";
 import colors from "../assets/colors.json";
 import { db } from "../appwrite/databases";
 import { useNotesContext } from "../context/NotesContext";
+import { Permission, Role } from "appwrite";
+import { useAuth } from "../context/AuthContext";
 
 const AddButton = () => {
   const startPositionRef = useRef(10);
   const { setNotes, setSelectedNote } = useNotesContext();
   const [adding, setAdding] = useState(false);
+  const { user } = useAuth();
   // const currentNotes = useRef(notes);
 
   const addNote = async () => {
@@ -19,12 +22,14 @@ const AddButton = () => {
       }),
 
       colors: JSON.stringify(colors[0]),
+      user_id: user.$id,
     };
 
     startPositionRef.current += 20;
+    const permissions = [Permission.write(Role.user(user.$id))];
 
     try {
-      let response = await db.notes.create(payload);
+      let response = await db.notes.create(payload, permissions);
       setNotes((prev) => [...prev, response]);
       setSelectedNote(response.$id);
     } catch (error) {

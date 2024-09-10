@@ -3,14 +3,15 @@
   line-height: 1.5;
   font-weight: 400;
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
   --spinner-animation-speed: 1s;
-  --background-color: #ffffff;
+  --background-color: rgba(255, 255, 255);
+  --form-bg: #212228;
+  --color: rgba(15, 14, 14, 0.857);
   --spinner-color: #222;
   --background-image: linear-gradient(#484a5318 0.1em, transparent 0.1em),
     linear-gradient(90deg, #484a5318 0.1em, transparent 0.1em);
@@ -18,7 +19,10 @@
 
 [data-theme="dark"] {
   --spinner-color: #fff;
-  --background-color: #212228;
+  --background-color: rgba(33, 34, 40);
+  --spinner-color: #eee;
+  --form-bg: #fff;
+  --color: rgba(255, 255, 255, 0.87);
   --background-image: linear-gradient(#303136 0.1em, transparent 0.1em),
     linear-gradient(90deg, #303136 0.1em, transparent 0.1em);
 }
@@ -36,13 +40,16 @@ body {
   position: relative; /* so the notes can be positioned absolute; */
   overflow: auto;
   transition: background-color 0.4s ease-in-out;
+  /* added  */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.theme-icon {
+.icon {
   width: 2.5rem;
   position: absolute;
-  right: 20px;
-  top: 20px;
+
   cursor: pointer;
 
   img {
@@ -52,6 +59,52 @@ body {
   img:hover {
     transform: scale(1.07);
   }
+}
+
+.theme-icon {
+  right: 20px;
+  top: 20px;
+}
+
+.logout-icon {
+  right: 20px;
+  bottom: 60px;
+
+  svg {
+    width: 40px;
+    height: 40px;
+    stroke-width: 1.5;
+    color: var(--color);
+  }
+
+  svg:hover {
+    transform: scale(1.07);
+  }
+}
+
+.logout-icon::after {
+  content: "Logout"; /* The tooltip text */
+  visibility: hidden;
+  opacity: 0;
+  width: 60px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 4px;
+  padding: 5px;
+  position: absolute;
+  bottom: 120%; /* Position above the icon */
+  right: 50%;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  z-index: 10;
+}
+
+/* Show the tooltip on hover */
+.logout-icon:hover::after {
+  visibility: visible;
+  opacity: 1;
 }
 
 .card {
@@ -106,7 +159,16 @@ textarea:focus {
   gap: 0.4rem;
 }
 
+.spinner--container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
 .spinner {
+  stroke: var(--spinner-color);
+  stroke-width: 1.5;
   animation: spin var(--spinner-animation-speed) infinite linear;
 }
 
