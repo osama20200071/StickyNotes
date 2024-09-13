@@ -5,7 +5,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { useAuth } from "../context/AuthContext";
 import Spinner from "../Icons/Spinner";
-import { account } from "../appwrite/config";
 
 const loginSchema = z.object({
   email: z.string().min(1, "Email is required").email(),

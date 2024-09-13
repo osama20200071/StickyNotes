@@ -195,6 +195,10 @@ textarea:focus {
   border-radius: 5px;
   cursor: auto;
 
+  p {
+    color: #fff;
+  }
+
   button {
     width: 4.2rem;
     height: 30px;
