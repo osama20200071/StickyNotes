@@ -1,10 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { useAuth } from "../context/AuthContext";
 import Spinner from "../Icons/Spinner";
+import Callout from "../components/Callout";
 
 const loginSchema = z.object({
   email: z.string().min(1, "Email is required").email(),
@@ -14,9 +15,10 @@ const loginSchema = z.object({
     .min(8, "Password must have at least 8 characters"),
 });
 
-function Register() {
+function Login() {
   const { handleLogin, user } = useAuth();
   const navigate = useNavigate();
+  const [err, setErr] = useState("");
 
   const {
     register,
@@ -29,7 +31,12 @@ function Register() {
 
   const onSubmit = async (data) => {
     console.log(data);
-    await handleLogin(data, reset);
+    // i return the error message from the handleLogin if there is error
+    const errMsg = await handleLogin(data, reset);
+
+    if (errMsg) {
+      setErr(errMsg);
+    }
   };
 
   useEffect(() => {
@@ -44,6 +51,11 @@ function Register() {
 
   return (
     <div>
+      {err && (
+        <Callout type="error" title="Error">
+          {err}
+        </Callout>
+      )}
       <h2 className="form-title">Login</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="form">
         <div className="formGroup">
@@ -73,4 +85,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default Login;

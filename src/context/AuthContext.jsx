@@ -40,8 +40,10 @@ const AuthContext = ({ children }) => {
       setUser(currentUser);
     } catch (error) {
       console.log("failed to login");
+      return error.message;
     }
   };
+
   const handleLogout = async () => {
     const response = await account.deleteSession("current");
     console.log(response);
